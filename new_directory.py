@@ -16,10 +16,7 @@ if not response:
     print("Http статус:", response.status_code, "(", response.reason, ")")
     sys.exit(1)
 
-# Запишем полученное изображение в файл.
-map_file = "map.png"
-with open(map_file, "wb") as file:
-    file.write(response.content)
+
 
 # Инициализируем pygame
 pygame.init()
@@ -45,6 +42,12 @@ while running:
             map_request = f"http://static-maps.yandex.ru/1.x/{center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
     pygame.display.flip()
 pygame.quit()
+
+
+# Запишем полученное изображение в файл.
+map_file = "map.png"
+with open(map_file, "wb") as file:
+    file.write(response.content)
 
 # Удаляем за собой файл с изображением.
 os.remove(map_file)
