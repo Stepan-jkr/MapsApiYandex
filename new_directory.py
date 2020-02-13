@@ -6,7 +6,7 @@ import requests
 
 response = None
 center = "37.620070,55.753630".split(',')
-map_request = f"http://static-maps.yandex.ru/1.x/{center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
+map_request = f"http://static-maps.yandex.ru/1.x/?ll={center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
 
 response = requests.get(map_request)
 
@@ -39,7 +39,7 @@ while running:
                 center[1] -= 1
             elif event.key == pygame.K_RIGHT:
                 center[1] += 1
-            map_request = f"http://static-maps.yandex.ru/1.x/{center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
+            map_request = f"http://static-maps.yandex.ru/1.x/?ll={center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
     pygame.display.flip()
 pygame.quit()
 
