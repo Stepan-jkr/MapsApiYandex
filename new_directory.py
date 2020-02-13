@@ -16,6 +16,10 @@ if not response:
     print("Http статус:", response.status_code, "(", response.reason, ")")
     sys.exit(1)
 
+# Запишем полученное изображение в файл.
+map_file = "map.png"
+with open(map_file, "wb") as file:
+    file.write(response.content)
 
 
 # Инициализируем pygame
@@ -32,22 +36,22 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                center[0] += 1
+                center[0] = str(float(center[0][0:2]) + 1 + float(center[0][2:]))
+                map_request = f"http://static-maps.yandex.ru/1.x/?ll={center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
             elif event.key == pygame.K_DOWN:
-                center[0] -= 1
+                center[0] = str(float(center[0][0:2]) - 1 + float(center[0][2:]))
+                map_request = f"http://static-maps.yandex.ru/1.x/?ll={center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
             elif event.key == pygame.K_LEFT:
-                center[1] -= 1
+                center[1] = str(float(center[1][0:2]) + 1 + float(center[1][2:]))
+                map_request = f"http://static-maps.yandex.ru/1.x/?ll={center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
             elif event.key == pygame.K_RIGHT:
-                center[1] += 1
-            map_request = f"http://static-maps.yandex.ru/1.x/?ll={center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
+                center[1] = str(float(center[1][0:2]) + 1 + float(center[1][2:]))
+                map_request = f"http://static-maps.yandex.ru/1.x/?ll={center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
+            # map_request = f"http://static-maps.yandex.ru/1.x/?ll={center[0]},{center[1]}&spn=0.1,0.1&l=sat,skl"
     pygame.display.flip()
 pygame.quit()
 
 
-# Запишем полученное изображение в файл.
-map_file = "map.png"
-with open(map_file, "wb") as file:
-    file.write(response.content)
 
 # Удаляем за собой файл с изображением.
 os.remove(map_file)
